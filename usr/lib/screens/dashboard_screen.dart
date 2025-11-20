@@ -23,14 +23,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<void> _loadData() async {
+    if (!mounted) return;
     setState(() {
       _isLoading = true;
     });
     await _dataService.fetchUserData();
-    _refreshStats();
+    if (mounted) {
+      _refreshStats();
+    }
   }
 
   void _refreshStats() {
+    if (!mounted) return;
     setState(() {
       _following = _dataService.getFollowing();
       _nonFollowers = _dataService.getNonFollowers();
@@ -102,7 +106,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           builder: (context) => const NonFollowersListScreen(),
                         ),
                       );
-                      _refreshStats(); // Refresh when returning
+                      if (mounted) {
+                        _refreshStats(); // Refresh when returning
+                      }
                     },
                   ),
                   const SizedBox(height: 16),

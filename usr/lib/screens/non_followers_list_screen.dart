@@ -22,12 +22,14 @@ class _NonFollowersListScreenState extends State<NonFollowersListScreen> {
   }
 
   void _loadList() {
+    if (!mounted) return;
     setState(() {
       _nonFollowers = _dataService.getNonFollowers();
     });
   }
 
   Future<void> _unfollowUser(TikTokUser user) async {
+    if (!mounted) return;
     setState(() {
       _processingIds.add(user.id);
     });
@@ -62,10 +64,15 @@ class _NonFollowersListScreenState extends State<NonFollowersListScreen> {
     
     // Simulate processing one by one for visual effect
     for (var id in usersToUnfollow) {
+      if (!mounted) return; // Stop if user left the screen
+      
       await _dataService.unfollowUser(id);
-      setState(() {
-        _loadList();
-      });
+      
+      if (mounted) {
+        setState(() {
+          _loadList();
+        });
+      }
       await Future.delayed(const Duration(milliseconds: 500));
     }
 

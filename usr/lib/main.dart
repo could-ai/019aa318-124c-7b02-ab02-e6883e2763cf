@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:couldai_user_app/screens/login_screen.dart';
-import 'package:couldai_user_app/screens/dashboard_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/dashboard_screen.dart';
 
 void main() {
   runApp(const TikTokUnfollowerApp());
